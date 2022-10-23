@@ -17,12 +17,11 @@ type directory struct {
 }
 
 func DirectoryController(ctx *gin.Context) {
-
 	dirPath := os.Getenv("dirpath")
-
 	files, err := ioutil.ReadDir(dirPath)
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
 	}
 	mappedDirectory := mapDirectoryToFiles(files)
 	ctx.IndentedJSON(http.StatusOK, mappedDirectory)

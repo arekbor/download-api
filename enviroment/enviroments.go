@@ -9,9 +9,11 @@ import (
 )
 
 type enviromentVariables struct {
-	Port      string `json:"port"`
-	DirPath   string `json:"dirpath"`
-	JwtSecret string `json:"jwtsecret"`
+	Port       string `json:"port"`
+	DirPath    string `json:"dirpath"`
+	JwtSecret  string `json:"jwtsecret"`
+	AdminLogin string `json:"adminlogin"`
+	AdminPwd   string `json:"adminpwd"`
 }
 
 func SetEnviromentVariables() {

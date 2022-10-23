@@ -2,7 +2,6 @@ package controller
 
 import (
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -16,11 +15,12 @@ func DownloadController(ctx *gin.Context) {
 	dirPath := os.Getenv("dirpath")
 	_, err := ioutil.ReadDir(dirPath)
 	if err != nil {
-		ctx.AbortWithError(http.StatusInternalServerError, err)
+		ctx.AbortWithStatusJSON(http.StatusInternalServerError, err.Error())
+		return
 	}
 	targetPath := filepath.Join(dirPath, paramFilename)
 	if _, err := os.Stat(targetPath); errors.Is(err, os.ErrNotExist) {
-		ctx.String(http.StatusBadRequest, fmt.Sprintln(err))
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
 		return
 	}
 	ctx.Header("Content-Description", "File Transfer")
