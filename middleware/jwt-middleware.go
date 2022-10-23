@@ -14,7 +14,7 @@ func AuthenticationMiddleware(ctx *gin.Context) {
 	maker, _ = security.NewJwtMaker(os.Getenv("jwtSecret"))
 	_, err := maker.VerifyToken(token)
 	if err != nil {
-		ctx.AbortWithError(http.StatusUnauthorized, err)
+		ctx.String(http.StatusUnauthorized, err.Error())
 		return
 	}
 	ctx.Next()
