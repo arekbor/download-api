@@ -13,6 +13,7 @@ import (
 func main() {
 	enviroment.SetEnviromentVariables()
 	router := gin.Default()
+	router.Use(middleware.CORSMiddleware())
 	apiGroup := router.Group("/api", middleware.AuthenticationMiddleware)
 
 	port := fmt.Sprintf(":%v", os.Getenv("port"))
@@ -20,6 +21,7 @@ func main() {
 
 	apiGroup.GET("/directory/", controller.DirectoryController)
 	apiGroup.GET("/download/:filename", controller.DownloadController)
+	apiGroup.POST("/upload", controller.UploadController)
 
 	router.POST("/login", controller.LoginController)
 }

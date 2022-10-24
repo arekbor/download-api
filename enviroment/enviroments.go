@@ -14,6 +14,7 @@ type enviromentVariables struct {
 	JwtSecret  string `json:"jwtsecret"`
 	AdminLogin string `json:"adminlogin"`
 	AdminPwd   string `json:"adminpwd"`
+	DirUpload  string `json:"dirupload"`
 }
 
 func SetEnviromentVariables() {

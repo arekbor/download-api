@@ -8,7 +8,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-type JwtMaker struct {
+type jwtMaker struct {
 	SecretKey string
 }
 
@@ -18,10 +18,10 @@ func NewJwtMaker(secretKey string) (Maker, error) {
 	if len(secretKey) < minSecretKeySize {
 		return nil, fmt.Errorf("invalid key size: must be at least %d characters", minSecretKeySize)
 	}
-	return &JwtMaker{secretKey}, nil
+	return &jwtMaker{secretKey}, nil
 }
 
-func (maker *JwtMaker) CreateToken(username string, duration time.Duration) (string, error) {
+func (maker *jwtMaker) CreateToken(username string, duration time.Duration) (string, error) {
 	payload, err := NewPayload(username, duration)
 	if err != nil {
 		return "", err
@@ -30,7 +30,7 @@ func (maker *JwtMaker) CreateToken(username string, duration time.Duration) (str
 	return jwtToken.SignedString([]byte(maker.SecretKey))
 }
 
-func (maker *JwtMaker) VerifyToken(token string) (*PayLoad, error) {
+func (maker *jwtMaker) VerifyToken(token string) (*PayLoad, error) {
 	keyFunc := func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, ErrInvalidToken
