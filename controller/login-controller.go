@@ -20,7 +20,7 @@ func LoginController(ctx *gin.Context) {
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, err.Error())
 		return
-	}
+	} 
 	if !verifyUser(user.Username, user.Password) {
 		ctx.AbortWithStatusJSON(http.StatusUnauthorized, "wrong pwd or login")
 		return
